@@ -1,0 +1,59 @@
+--- Makefile	2014-08-31 14:05:07.385816562 +0800
++++ /root/Makefile	2014-08-31 14:06:30.206816919 +0800
+@@ -52,13 +52,13 @@
+ CONFIG_CLEAN_VPATH_FILES =
+ am__installdirs = "$(DESTDIR)$(sbindir)"
+ PROGRAMS = $(sbin_PROGRAMS)
+-am__gluster_SOURCES_DIST = cli.c registry.c input.c cli-cmd.c cli-rl.c \
++am__gluster_SOURCES_DIST = instrument.c cli.c registry.c input.c cli-cmd.c cli-rl.c \
+ 	cli-cmd-volume.c cli-cmd-peer.c cli-rpc-ops.c cli-cmd-parser.c \
+ 	cli-cmd-system.c cli-cmd-misc.c cli-xml-output.c \
+ 	cli-quotad-client.c cli-cmd-volume-bdevice.c
+ am__objects_1 =  \
+ 	cli-cmd-volume-bdevice.$(OBJEXT)
+-am_gluster_OBJECTS = cli.$(OBJEXT) registry.$(OBJEXT) input.$(OBJEXT) \
++am_gluster_OBJECTS = instrument.$(OBJEXT) cli.$(OBJEXT) registry.$(OBJEXT) input.$(OBJEXT) \
+ 	cli-cmd.$(OBJEXT) cli-rl.$(OBJEXT) cli-cmd-volume.$(OBJEXT) \
+ 	cli-cmd-peer.$(OBJEXT) cli-rpc-ops.$(OBJEXT) \
+ 	cli-cmd-parser.$(OBJEXT) cli-cmd-system.$(OBJEXT) \
+@@ -114,6 +114,7 @@
+ AMTAR = ${SHELL} /root/rpmbuild/BUILD/glusterfs-3.4.0.57rhs/missing --run tar
+ AM_DEFAULT_VERBOSITY = 0
+ AM_LIBTOOLFLAGS = 
++
+ AM_MAKEFLAGS =  --no-print-directory --quiet
+ AR = ar
+ ARGP_STANDALONE_CPPFLAGS = 
+@@ -124,7 +125,7 @@
+ AWK = gawk
+ CC = gcc
+ CCDEPMODE = depmode=gcc3
+-CFLAGS = -g -O2 -Wformat -Werror=format-security
++CFLAGS = -g -finstrument-functions  -Wformat -Werror=format-security
+ CONTRIBDIR = $(top_srcdir)/contrib
+ CPP = gcc -E
+ CPPFLAGS = 
+@@ -142,12 +143,12 @@
+ FGREP = /bin/grep -F
+ FUSERMOUNT_SUBDIR = contrib/fuse-util
+ FUSE_CLIENT_SUBDIR = fuse
+-GF_CFLAGS =  -O0
++GF_CFLAGS = -g -finstrument-functions 
+ GF_CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -D$(GF_HOST_OS) -I$(top_srcdir)/libglusterfs/src -I$(CONTRIBDIR)/uuid
+ GF_DISTRIBUTION = Redhat
+ GF_FUSE_CFLAGS = -DFUSERMOUNT_DIR=\"$(bindir)\"
+ GF_FUSE_LDADD = 
+-GF_GLUSTERFS_CFLAGS =  -O0
++GF_GLUSTERFS_CFLAGS = -g -finstrument-functions 
+ GF_GLUSTERFS_LIBS = 
+ GF_HOST_OS = GF_LINUX_HOST_OS
+ GF_LDADD = 
+@@ -277,7 +278,7 @@
+ top_build_prefix = ../../
+ top_builddir = ../..
+ top_srcdir = ../../../BUILD/glusterfs-3.4.0.57rhs
+-gluster_SOURCES = cli.c registry.c input.c cli-cmd.c cli-rl.c \
++gluster_SOURCES = instrument.c cli.c registry.c input.c cli-cmd.c cli-rl.c \
+ 	cli-cmd-volume.c cli-cmd-peer.c cli-rpc-ops.c cli-cmd-parser.c \
+ 	cli-cmd-system.c cli-cmd-misc.c cli-xml-output.c \
+ 	cli-quotad-client.c $(am__append_1)
